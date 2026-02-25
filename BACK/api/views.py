@@ -13,6 +13,62 @@ from .serializers import (
 )
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
+from .filters import *
+from django_filters.rest_framework import DjangoFilterBackend
+
+################################## Model View Set##################################################
+class UsuarioViewSet(ModelViewSet):
+    queryset = Usuario.objects.all()
+    serializer_class = UsuarioSerializer
+    # permission_classes = [IsAuthenticated]
+
+    # def get_queryset(self):
+    #     tipo = self.request.query_params.get('tipo')
+    #     if tipo:
+    #         self.queryset = self.queryset.filter(tipo=tipo)
+    #     return self.queryset
+
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = UsuarioFilter
+
+
+class ImovelViewSet(ModelViewSet):
+    queryset = Imovel.objects.all()
+    serializer_class = ImovelSerializer 
+    # permission_classes = [IsAuthenticated]
+
+    # def get_queryset(self):
+    #     tipo = self.request.query_params.get('tipo')
+    #     status = self.request.query_params.get('status')
+    #     if tipo:
+    #         self.queryset = self.queryset.filter(tipo=tipo)
+    #     if status:
+    #         self.queryset = self.queryset.filter(status=status)
+    #     return self.queryset
+
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ImovelFilter
+    
+    
+
+class ContratoViewSet(ModelViewSet):
+    queryset = Contrato.objects.all()
+    serializer_class = ContratoSerializer
+    # permission_classes = [IsAuthenticated]
+
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ContratoFilter
+
+
+class PagamentoViewSet(ModelViewSet):   
+    queryset = Pagamento.objects.all()
+    serializer_class = PagamentoSerializer
+    # permission_classes = [IsAuthenticated]
+
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = PagamentoFilter
+
+
 
 
 ############################## Via Método ###########################################
@@ -212,23 +268,3 @@ def listar_usuarios(request):
 #         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-################################## Model View Set##################################################
-class UsuarioViewSet(ModelViewSet):
-    queryset = Usuario.objects.all()
-    serializer_class = UsuarioSerializer
-    # permission_classes = [IsAuthenticated]
-
-class ImovelViewSet(ModelViewSet):
-    queryset = Imovel.objects.all()
-    serializer_class = ImovelSerializer 
-    permission_classes = [IsAuthenticated]
-
-class ContratoViewSet(ModelViewSet):
-    queryset = Contrato.objects.all()
-    serializer_class = ContratoSerializer
-    permission_classes = [IsAuthenticated]
-
-class PagamentoViewSet(ModelViewSet):   
-    queryset = Pagamento.objects.all()
-    serializer_class = PagamentoSerializer
-    permission_classes = [IsAuthenticated]
